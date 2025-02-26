@@ -48,4 +48,55 @@ We've done the same, the following commands recall all the steps to create a pac
 
 Our python_file completed is in the repository so we won't explain the code in this file. 
 
+## 3) Using ROS to launch files
+
+By launching the command : `roslaunch tp1_ros_package example_launch_file.launch`, we notice that every files in the tp1 has been launched in the same terminal. We are able to listen to the message and seeing the log that the message has been sent on the same terminal which can be handful projects with a large amount of nodes.
+
+After entering the command, we can check the list of all the topics (`rostopic list`) and we notice that the `/talking_topic` has been added to the list. This is another demonstration that all files has been launched. The `/talking_topic` will disappear once we kill the terminal.
+
+### 3.1)
+
+Going back to the tp2, we can also map the keys with the different actions inside the .launch file in to make things more clear.
+The structure of the code is fairly the same, we will only use a new methods : `rospy.get_param()` in order to get the parameters we've defined in the .launch file.
+
+The .launch file is also in the repository and we have made 2 differents files to differentiate the Python file with all the parameters directly inside the Python file (`teleoperation_node.py`) and the file where parameters are defined in the .launch file (`teleoperation_node_v2.py`).
+
+## 4) Exploring TurtleBot2 sensors
+
+### 4.1) `rosmsg`
+
+`rosmsg` provides a detailed description of the type of the message we have. We will take an example and show what kind of informations we can get from this command.
+
+Frist of all, we need to choose a topic. We want now to know more about the sensors so we will enter the command `rostopic list` and then we will choose the the topic named `/mobile_base/sensors/imu_data`
+
+Now that we have the name of the topic, we want its type, so we enter the following command : `rostopic type /mobile_base/sensors/imu_data`. It prints `sensor_msgs/Imu`.
+
+Lastly, all we need to do now is to enter the command `rosmsg show -r sensor_msgs/Imu` to get detailed information about this type of message, here's what we got :
+
+~~~# This is a message to hold data from an IMU (Inertial Measurement Unit)
+#
+# Accelerations should be in m/s^2 (not in g's), and rotational velocity should be in rad/sec
+#
+# If the covariance of the measurement is known, it should be filled in (if all you know is the 
+# variance of each measurement, e.g. from the datasheet, just put those along the diagonal)
+# A covariance matrix of all zeros will be interpreted as "covariance unknown", and to use the
+# data a covariance will have to be assumed or gotten from some other source
+#
+# If you have no estimate for one of the data elements (e.g. your IMU doesn't produce an orientation 
+# estimate), please set element 0 of the associated covariance matrix to -1
+# If you are interpreting this message, please check for a value of -1 in the first element of each 
+# covariance matrix, and disregard the associated estimate.
+
+Header header
+
+geometry_msgs/Quaternion orientation
+float64[9] orientation_covariance # Row major about x, y, z axes
+
+geometry_msgs/Vector3 angular_velocity
+float64[9] angular_velocity_covariance # Row major about x, y, z axes
+
+geometry_msgs/Vector3 linear_acceleration
+float64[9] linear_acceleration_covariance # Row major x, y z~~~
+
+
 
