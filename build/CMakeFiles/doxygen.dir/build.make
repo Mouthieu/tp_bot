@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/user/Bureau/tp_student_bot/tp_bot/src
+CMAKE_SOURCE_DIR = /home/user/Bureau/tp_bot/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/user/Bureau/tp_student_bot/tp_bot/build
+CMAKE_BINARY_DIR = /home/user/Bureau/tp_bot/build
 
 # Utility rule file for doxygen.
 
@@ -67,6 +67,6 @@ CMakeFiles/doxygen.dir/clean:
 .PHONY : CMakeFiles/doxygen.dir/clean
 
 CMakeFiles/doxygen.dir/depend:
-	cd /home/user/Bureau/tp_student_bot/tp_bot/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/user/Bureau/tp_student_bot/tp_bot/src /home/user/Bureau/tp_student_bot/tp_bot/src /home/user/Bureau/tp_student_bot/tp_bot/build /home/user/Bureau/tp_student_bot/tp_bot/build /home/user/Bureau/tp_student_bot/tp_bot/build/CMakeFiles/doxygen.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/user/Bureau/tp_bot/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/user/Bureau/tp_bot/src /home/user/Bureau/tp_bot/src /home/user/Bureau/tp_bot/build /home/user/Bureau/tp_bot/build /home/user/Bureau/tp_bot/build/CMakeFiles/doxygen.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/doxygen.dir/depend
 

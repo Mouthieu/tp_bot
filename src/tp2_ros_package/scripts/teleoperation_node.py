@@ -53,11 +53,11 @@ class Teleoperation_Node:
             elif key == 'f':  # Increase speed
                 self.linear_speed *= 1.1  # Increase linear speed by 10%
                 self.angular_speed *= 1.1  # Increase angular speed by 10%
-                rospy.loginfo(f"Speed increased: Linear = {self.linear_speed}, Angular = {self.angular_speed}")
+                rospy.loginfo("Speed increased: Linear = {}, Angular = {}".format(self.linear_speed, self.angular_speed))
             elif key == 's':  # Decrease speed
                 self.linear_speed *= 0.9  # Decrease linear speed by 10%
                 self.angular_speed *= 0.9  # Decrease angular speed by 10%
-                rospy.loginfo(f"Speed decreased: Linear = {self.linear_speed}, Angular = {self.angular_speed}")
+                rospy.loginfo("Speed decreased: Linear = {}, Angular = {}".format(self.linear_speed, self.angular_speed))
             elif key == 'q':  # Quit the program
                 break  # Exit the loop and terminate the node
 

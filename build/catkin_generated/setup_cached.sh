@@ -7,7 +7,8 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/user/Bureau/tp_student_bot/tp_bot/devel:$CMAKE_PREFIX_PATH"
-export PWD='/home/user/Bureau/tp_student_bot/tp_bot/build'
-export ROSLISP_PACKAGE_DIRECTORIES="/home/user/Bureau/tp_student_bot/tp_bot/devel/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
-export ROS_PACKAGE_PATH="/home/user/Bureau/tp_student_bot/tp_bot/src:$ROS_PACKAGE_PATH"
+export CMAKE_PREFIX_PATH='/home/user/Bureau/tp_bot/devel:/home/user/catkin_ws/devel:/opt/ros/melodic'
+export LD_LIBRARY_PATH='/home/user/catkin_ws/devel/lib:/opt/ros/melodic/lib'
+export PWD='/home/user/Bureau/tp_bot/build'
+export ROSLISP_PACKAGE_DIRECTORIES='/home/user/Bureau/tp_bot/devel/share/common-lisp:/home/user/catkin_ws/devel/share/common-lisp'
+export ROS_PACKAGE_PATH='/home/user/Bureau/tp_bot/src:/home/user/catkin_ws/src:/opt/ros/melodic/share'
