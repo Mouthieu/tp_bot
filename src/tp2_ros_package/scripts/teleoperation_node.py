@@ -11,6 +11,13 @@ from geometry_msgs.msg import Twist
 # Definition of class
 class Teleoperation_Node:
     def __init__(self, node_name):
+	"""
+	This method is launched whenever we create a new instance of the class
+	Parameters:
+		node_name: The name of the name we want to initialize
+	Returns:
+		None
+	"""
         rospy.init_node(node_name, anonymous=True)  # Remplacer le nom du nœud ici
         # Create a publisher to send messages to /cmd_vel_mux/input/navi
         self.pub = rospy.Publisher('/cmd_vel_mux/input/navi', Twist, queue_size=10)
@@ -19,8 +26,14 @@ class Teleoperation_Node:
         self.linear_speed = 0.5  # Initial linear speed (m/s)
         self.angular_speed = 0.5  # Initial angular speed (rad/s)
 
-    # This function reads a single keyboard character from the terminal and returns this character
     def getKey(self):
+	"""
+	This method reads a single keyboard character from the terminal and returns this character
+	Parameters:
+		None	
+	Returns:
+		key: The key we pressed on the keyboard
+    	"""
         # Back-up default terminal settings
         settings = termios.tcgetattr(sys.stdin)
         tty.setraw(sys.stdin.fileno())  # Setting stdio terminal to raw (no need for pressing enter)
@@ -32,6 +45,13 @@ class Teleoperation_Node:
 
     # This function controls the robot movement based on key presses
     def control_robot(self):
+	"""
+	This method makes the link between the actions we make on the keyboard and the data sent to the topic in order to make the robot move
+	Parameters:	
+		None
+	Returns:
+		None
+	"""
         move_cmd = Twist()
         rate = rospy.Rate(10)  # 10 Hz
 
@@ -74,7 +94,7 @@ class Teleoperation_Node:
 if __name__ == '__main__':
     try:
         # Create an instance of Teleoperation_Node and start controlling the robot
-        teleop = Teleoperation_Node('teleoperation_node')  # Pass a valid node name
+        teleop = Teleoperation_Node('teleoperation_node')  # The name of the node
         teleop.control_robot()  # Start the control loop
     except rospy.ROSInterruptException:
         pass
