@@ -63,7 +63,7 @@ The .launch file is also in the repository and we have made 2 differents files t
 
 ## 4) Exploring TurtleBot2 sensors
 
-### 4.1) `rosmsg`
+### 4.1) Detailed informations about messages types `rosmsg`
 
 `rosmsg` provides a detailed description of the type of the message we have. We will take an example and show what kind of informations we can get from this command.
 
@@ -99,6 +99,14 @@ float64[9] angular_velocity_covariance # Row major about x, y, z axes
 geometry_msgs/Vector3 linear_acceleration
 float64[9] linear_acceleration_covariance # Row major x, y z
 ~~~
+
+### 4.2) Visualization of the sensor readings `rviz`
+
+We have downloaded a rviz config file that we will name `tp-2.rviz` from now on.
+
+To visualize the data of the sensors, we will use the following command : `rosrun rviz rviz -d tp-2.rviz`
+
+<img src="rviz_screenshot_1.png">
 
 
 
