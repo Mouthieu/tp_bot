@@ -15,7 +15,7 @@ This type of topic need a particular format of data which is the following : $'[
 
 Let's say that we want to send the following data to the topic `/cmd_vel_mux/input/navi` of type `geometry_msgs/Twist` :
 
-$$ \left\{\begin{array}{lll}x = 2.0\\ y = 1.0\\ z = 0.0\end{array}\right. \quad \left\{ \begin{array}{lll}\alpha = 0.0\\ \beta = 3.0\\ \gamma = 0.0\end{array} \right. $$
+$$\left\\{ \begin{array}{lll}x = 2.0\\\ y = 1.0\\\ z = 0.0\end{array}\right. \quad \left\\{ \begin{array}{lll}\alpha = 0.0\\\ \beta = 3.0\\\ \gamma = 0.0\end{array} \right.$$
 
 Our command will be : `rostopic pub /cmd_vel_mux/input/navi geometry_msgs/Twist '[2.0, 1.0, 0.0]' '[0.0, 3.0, 0.0]'`
 
