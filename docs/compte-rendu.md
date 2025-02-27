@@ -15,7 +15,7 @@ This type of topic need a particular format of data which is the following : $'[
 
 Let's say that we want to send the following data to the topic `/cmd_vel_mux/input/navi` of type `geometry_msgs/Twist` :
 
-$$\left\{\begin{array}{lll}x = 2.0\\ y = 1.0\\ z = 0.0\end{array}\right.\quad \left\{\begin{array}{lll}\alpha = 0.0\\ \beta = 3.0\\ \gamma = 0.0\end{array}\right.$$
+$$ \left\{\begin{array}{lll}x = 2.0\\ y = 1.0\\ z = 0.0\end{array}\right. \quad \left\{ \begin{array}{lll}\alpha = 0.0\\ \beta = 3.0\\ \gamma = 0.0\end{array} \right. $$
 
 Our command will be : `rostopic pub /cmd_vel_mux/input/navi geometry_msgs/Twist '[2.0, 1.0, 0.0]' '[0.0, 3.0, 0.0]'`
 
@@ -73,7 +73,8 @@ Now that we have the name of the topic, we want its type, so we enter the follow
 
 Lastly, all we need to do now is to enter the command `rosmsg show -r sensor_msgs/Imu` to get detailed information about this type of message, here's what we got :
 
-~~~# This is a message to hold data from an IMU (Inertial Measurement Unit)
+~~~
+# This is a message to hold data from an IMU (Inertial Measurement Unit)
 #
 # Accelerations should be in m/s^2 (not in g's), and rotational velocity should be in rad/sec
 #
@@ -96,7 +97,8 @@ geometry_msgs/Vector3 angular_velocity
 float64[9] angular_velocity_covariance # Row major about x, y, z axes
 
 geometry_msgs/Vector3 linear_acceleration
-float64[9] linear_acceleration_covariance # Row major x, y z~~~
+float64[9] linear_acceleration_covariance # Row major x, y z
+~~~
 
 
 
