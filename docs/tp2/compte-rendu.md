@@ -108,5 +108,23 @@ To visualize the data of the sensors, we will use the following command : `rosru
 
 <img src="rviz_screenshot_1.png">
 
+This is what we have after entering the last command. 
+
+We will then add the following Displays :
+
+- RGB Image
+- Depth Image
+- IMU data
+
+That adds some windows as it can be seen in the following image. We will talk about every new Displays :
+
+<img src="rviz_screenshot_2.png">
+
+The `RGB Image` display is the one in the left side at the middle. It gives us a representation of the colorized Image the robot sees
+
+The `Depth Image`display is below, in the left-down corner. Estimate the depth of the image and shows it in balck and white with white being the furthest and black the nearest. The shade created by the image allows us to easily see the depths. Note that, compared to the `RGB Image` display, the image given is a bit zoomed.
+
+The `IMU data` Display gives us data on the Inertia of the robot. It is characterized by the infinite purple cylinder that surround the robot. 
+
 
 
