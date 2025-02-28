@@ -32,9 +32,6 @@ class Estimation_Node:
 	point_cloud_sub = rospy.Subscriber("/camera/depth/points", PointCloud2, self.estimate_pose_callback) # ROS topic subscription
 
 	self.br = tf.TransformBroadcaster()
-	
-	# Minimum number of points to calculate the equation of the planes
-	self.min_points = 20
 
 	rospy.spin() # Initiate the ROS loop
 
@@ -45,7 +42,7 @@ class Estimation_Node:
 
     def retrieve_points(self, color):
 	return_array = []
-	for _ in range(self.min_points):
+	for _ in range(self.num_of_plane_points):
 		point = random.randint(0, len(self.plane_points[color]))
 		return_array.append(self.plane_points[color][point])
 	to_np = np.array(return_array)
@@ -57,9 +54,11 @@ class Estimation_Node:
 	for _ in range(length):
 		sol.append(-1)
 	np_sol = np.array(sol)
-	left = np.linalg.inv(np.dot(np.transpose(points), points))
-	mid = np.dot(left, np.transpose(points))
-	return np.dot(mid, np_sol)
+	#left = np.linalg.inv(np.matmul(np.transpose(points), points))
+	#mid = np.matmul(left, np.transpose(points))
+	#return np.matmul(mid, np_sol)
+	return np.linalg.solve(np.matmul(np.transpose(points), points), np.matmul(np.transpose(points), np_sol))
+
 
     def estimate_pose_callback(self, pointcloud_msg):
 	#print 'Received PointCloud2 message. Reading data...'
@@ -81,7 +80,7 @@ class Estimation_Node:
 	"""
 	We will consider that 20 points is enough to make the plane
 	"""
-	if len(self.plane_points["red"]) < self.min_points or len(self.plane_points["blue"]) < self.min_points or len(self.plane_points["green"]) < self.min_points:
+	if len(self.plane_points["red"]) < self.num_of_plane_points or len(self.plane_points["blue"]) < self.num_of_plane_points or len(self.plane_points["green"]) < self.num_of_plane_points:
 		rospy.loginfo("Not enough points to make the plane")	
 
 	# Estimate the plane equation for each colored point set using Least Squares algorithm
@@ -89,12 +88,16 @@ class Estimation_Node:
 	blue_points = self.retrieve_points("blue")
 	green_points = self.retrieve_points("green")
 	
-	red_plan = self.calculate_plane_equation(red_points)
-	blue_plan = self.calculate_plane_equation(blue_points)
-	green_plan = self.calculate_plane_equation(green_points)
+	red_plan = self.calculate_plane_equation(red_points)  # Vecteur normal
+	blue_plan = self.calculate_plane_equation(blue_points) # Vecteur normal
+	green_plan = self.calculate_plane_equation(green_points) # Vecteur normal
 	#rospy.loginfo("Plan rouge : {}".format(self.calculate_plane_equation(red_points)))
 	#rospy.loginfo("Plan bleu : {}".format(self.calculate_plane_equation(blue_points)))
 	#rospy.loginfo("Plan vert : {}".format(self.calculate_plane_equation(green_points)))
+	#A = np.array([red_plan[:3], blue_plan[:3], green_plan[:3]])
+        #b = np.array([-red_plan[3], -blue_plan[3], -green_plan[3]])
+	#intersection_point = np.linalg.solve(A, b)
+        #rospy.loginfo("Intersection point: {}".format(intersection_point))	
 
 	### Enter your code ###
 
@@ -110,18 +113,22 @@ class Estimation_Node:
 	# Solve 3x3 linear system of equations given by the three intersecting planes, in order to find their point of intersection
 	### Enter your code ###
 	m = np.concatenate(([red_plan], [blue_plan], [green_plan]))
-	corner = np.dot(np.array([-1, -1, -1]), m)
+	corner = np.linalg.solve(m, [-1, -1, -1])
+	rospy.loginfo(corner)
 
 	# Obtain z-axis (blue) vector as the vector orthogonal to the 3D plane defined by the red (x-axis) and the green (y-axis)
 	### Enter your code ###
-	blue_vector = blue_plan/np.linalg.norm(blue_plan)
+	blue_vector = np.cross(red_plan, green_plan)
+	blue_vector = blue_vector/np.linalg.norm(blue_vector)
 
 	# Obtain y-axis (green) vector as the vector orthogonal to the 3D plane defined by the blue (z-axis) and the red (x-axis)
 	### Enter your code ###
-	green_vector = green_plan/np.linalg.norm(green_plan)
-	
-	# Obtain x-axis (red) ...
-	red_vector = red_plan/np.linalg.norm(red_plan)
+	green_vector = np.cross(blue_vector, red_plan)
+	green_vector = green_vector/np.linalg.norm(green_vector)
+
+	# red
+	red_vector = np.cross(blue_vector, green_vector)
+	red_vector = red_vector/np.linalg.norm(red_vector)
 
 	# Construct the 3x3 rotation matrix whose columns correspond to the x, y and z axis respectively
 	### Enter your code ###
@@ -130,12 +137,15 @@ class Estimation_Node:
 
 	# Obtain the corresponding euler angles from the previous 3x3 rotation matrix
 	### Enter your code ###
+	euler_angles = tf.transformations.euler_from_matrix(rot_m)
 
 	# Set the translation part of the 6DOF pose 'self.feature_pose'
-	### Enter your code ###
+	self.feature_pose.translation.x = corner[0]
+	self.feature_pose.translation.y = corner[1]
+	self.feature_pose.translation.z = corner[2]
 
 	# Set the rotation part of the 6DOF pose 'self.feature_pose'
-	### Enter your code ###
+	self.feature_pose.rotation = tf.transformations.quaternion_from_euler(euler_angles[0], euler_angles[1], euler_angles[2])
 
 	# Publish the transform using the data stored in the 'self.feature_pose'
 	self.br.sendTransform((self.feature_pose.translation.x, self.feature_pose.translation.y, self.feature_pose.translation.z), self.feature_pose.rotation, rospy.Time.now(), "corner_6dof_pose", "camera_depth_optical_frame") 
