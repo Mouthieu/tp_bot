@@ -67,23 +67,59 @@ class Teleoperation_Node:
 
             if key == 'u' and self.key_u == 'forward':  # Avancer
                 move_cmd.linear.x = self.linear_speed
+		move_cmd.linear.y = 0
+		move_cmd.linear.z = 0
+
+		move_cmd.angular.x = 0
+		move_cmd.angular.y = 0
                 move_cmd.angular.z = 0
             elif key == 'j' and self.key_j == 'backward':
                 move_cmd.linear.x = -self.linear_speed
+		move_cmd.linear.y = 0
+		move_cmd.linear.z = 0
+
+		move_cmd.angular.x = 0
+		move_cmd.angular.y = 0
                 move_cmd.angular.z = 0
             elif key == 'k' and self.key_k == 'rotate_right':
                 move_cmd.linear.x = 0
+		move_cmd.linear.y = 0
+		move_cmd.linear.z = 0
+
+		move_cmd.angular.x = 0
+		move_cmd.angular.y = 0
                 move_cmd.angular.z = -self.angular_speed
             elif key == 'h' and self.key_h == 'rotate_left':
                 move_cmd.linear.x = 0
+		move_cmd.linear.y = 0
+		move_cmd.linear.z = 0
+
+		move_cmd.angular.x = 0
+		move_cmd.angular.y = 0
                 move_cmd.angular.z = self.angular_speed
             elif key == 'f' and self.key_f == 'increase_speed':
                 self.linear_speed *= 1.1 # Increase linear speed by 10%
                 self.angular_speed *= 1.1 # Increase angular speed by 10%
+
+		move_cmd.linear.x = 0
+		move_cmd.linear.y = 0
+		move_cmd.linear.z = 0
+
+		move_cmd.angular.x = 0
+		move_cmd.angular.y = 0
+                move_cmd.angular.z = 0
                 rospy.loginfo("Speed increased: Linear = {}, Angular = {}".format(self.linear_speed, self.angular_speed))
             elif key == 's' and self.key_s == 'decrease_speed':
                 self.linear_speed *= 0.9  # Decrease linear speed by 10%
                 self.angular_speed *= 0.9 # Decrease angular speed by 10%
+
+		move_cmd.linear.x = 0
+		move_cmd.linear.y = 0
+		move_cmd.linear.z = 0
+
+		move_cmd.angular.x = 0
+		move_cmd.angular.y = 0
+                move_cmd.angular.z = 0
                 rospy.loginfo("Speed decreased: Linear = {}, Angular = {}".format(self.linear_speed, self.angular_speed))
             elif key == 'q':  # Quit the program
                 break # Exit the loop and terminate the node
