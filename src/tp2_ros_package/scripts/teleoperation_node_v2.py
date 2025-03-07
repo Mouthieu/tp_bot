@@ -21,15 +21,17 @@ class Teleoperation_Node:
 
         # Get the parameters from the .launch file
         self.linear_speed = rospy.get_param('linear_speed', 0.5)
-        self.angular_speed = rospy.get_param('angular_speed', 0.5)
+        self.angular_speed = rospy.get_param('angular_speed', 1)
         
         # Gather the actions of the keys
         self.key_u = rospy.get_param('key_u', 'forward')
         self.key_j = rospy.get_param('key_j', 'backward')
         self.key_k = rospy.get_param('key_k', 'rotate_right')
         self.key_h = rospy.get_param('key_h', 'rotate_left')
-        self.key_f = rospy.get_param('key_f', 'increase_speed')
-        self.key_s = rospy.get_param('key_s', 'decrease_speed')
+        self.key_f = rospy.get_param('key_f', 'increase_linear_speed')
+        self.key_s = rospy.get_param('key_s', 'decrease_linear_speed')
+	self.key_r = rospy.get_param('key_r', 'increase_angular_speed')
+        self.key_z = rospy.get_param('key_z', 'decrease_angular_speed')
 
         # Publisher to send commands
         self.pub = rospy.Publisher('/cmd_vel_mux/input/navi', Twist, queue_size=10)
@@ -97,9 +99,9 @@ class Teleoperation_Node:
 		move_cmd.angular.x = 0
 		move_cmd.angular.y = 0
                 move_cmd.angular.z = self.angular_speed
-            elif key == 'f' and self.key_f == 'increase_speed':
+            elif key == 'f' and self.key_f == 'increase_linear_speed':
                 self.linear_speed *= 1.1 # Increase linear speed by 10%
-                self.angular_speed *= 1.1 # Increase angular speed by 10%
+                
 
 		move_cmd.linear.x = 0
 		move_cmd.linear.y = 0
@@ -109,9 +111,9 @@ class Teleoperation_Node:
 		move_cmd.angular.y = 0
                 move_cmd.angular.z = 0
                 rospy.loginfo("Speed increased: Linear = {}, Angular = {}".format(self.linear_speed, self.angular_speed))
-            elif key == 's' and self.key_s == 'decrease_speed':
+            elif key == 's' and self.key_s == 'decrease_linear_speed':
                 self.linear_speed *= 0.9  # Decrease linear speed by 10%
-                self.angular_speed *= 0.9 # Decrease angular speed by 10%
+                
 
 		move_cmd.linear.x = 0
 		move_cmd.linear.y = 0
@@ -121,6 +123,30 @@ class Teleoperation_Node:
 		move_cmd.angular.y = 0
                 move_cmd.angular.z = 0
                 rospy.loginfo("Speed decreased: Linear = {}, Angular = {}".format(self.linear_speed, self.angular_speed))
+	    elif key == 'r' and self.key_r == 'increase_angular_speed':
+                self.angular_speed *= 1.1 # Decrease angular speed by 10%
+                
+
+		move_cmd.linear.x = 0
+		move_cmd.linear.y = 0
+		move_cmd.linear.z = 0
+
+		move_cmd.angular.x = 0
+		move_cmd.angular.y = 0
+                move_cmd.angular.z = 0
+                rospy.loginfo("Speed increased: Linear = {}, Angular = {}".format(self.linear_speed, self.angular_speed))
+	    elif key == 'z' and self.key_z == 'decrease_angular_speed':
+                self.angular_speed *= 0.9 # Decrease angular speed by 10%
+                
+
+		move_cmd.linear.x = 0
+		move_cmd.linear.y = 0
+		move_cmd.linear.z = 0
+
+		move_cmd.angular.x = 0
+		move_cmd.angular.y = 0
+                move_cmd.angular.z = 0
+                rospy.loginfo("Speed increased: Linear = {}, Angular = {}".format(self.linear_speed, self.angular_speed))
             elif key == 'q':  # Quit the program
                 break # Exit the loop and terminate the node
 

@@ -1,0 +1,2 @@
+
+-DCATKIN_DEVEL_PREFIX=/home/user/Bureau/tp4_workspace_bot/devel -DCMAKE_INSTALL_PREFIX=/home/user/Bureau/tp4_workspace_bot/install -G Unix Makefiles
