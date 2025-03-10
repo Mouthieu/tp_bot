@@ -126,5 +126,3 @@ The `Depth Image`display is below, in the left-down corner. Estimate the depth o
 
 The `IMU data` Display gives us data on the Inertia of the robot. It is characterized by the infinite purple cylinder that surround the robot. 
 
-
-
