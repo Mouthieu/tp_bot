@@ -34,7 +34,7 @@ class Teleoperation_Node:
         self.key_z = rospy.get_param('key_z', 'decrease_angular_speed')
 
         # Publisher to send commands
-        self.pub = rospy.Publisher('/cmd_vel_mux/input/navi', Twist, queue_size=10)
+        self.pub = rospy.Publisher('/teleop/cmd_vel', Twist, queue_size=10)
 
     def getKey(self):
         """
