@@ -1,0 +1,18 @@
+<launch>
+    <!-- PARAMETERS -->
+
+    <!-- REACTIVE NODE -->
+    <node name="reactive_node" pkg="tp4_ros_package" type="reactive.py" output="screen">
+        <!-- NO PARAMETERS -->
+    </node>
+
+    <!-- ASTAR NODE -->
+    <node name="a_star_node" pkg="tp4_ros_package" type="Astar.py" self.map_data[self.map_data == -1] = 0>
+        <param name="use_eight_connected", False>
+    </node>
+
+    <!-- PUBLISH MAP NODE -->
+    <node name="publish_map_node" pkg="tp4_ros_package" type="publish_map.py">
+        <!-- NO PARAMETERS -->
+    </node>
+</launch>

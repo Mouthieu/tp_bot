@@ -1,0 +1,22 @@
+<launch>
+    <!-- PARAMETERS -->
+    <rosparam command="load" file="$(find tp4_ros_package)/map.yaml"/>
+
+    <!-- REACTIVE NODE -->
+    <!-- <node name="reactive_node" pkg="tp4_ros_package" type="reactive.py" output="screen"> -->
+        <!-- NO PARAMETERS -->
+    <!-- </node> -->
+
+    <!-- ASTAR NODE -->
+    <node name="a_star_node" pkg="tp4_ros_package" type="Astar.py" output="screen">
+        <param name="use_eight_connected" value="False"/>
+        <!-- <param name="starting_point" value="(210, 280)"/> -->
+        <param name="starting_point" value="(210, 280)"/>
+        <param name="end_point" value="(470, 255)"/>
+    </node>
+
+    <!-- PUBLISH MAP NODE -->
+    <node name="publish_map_node" pkg="tp4_ros_package" type="publish_map.py" output="screen">
+        <!-- NO PARAMETERS -->
+    </node>
+</launch>

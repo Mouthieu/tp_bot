@@ -13,8 +13,8 @@ def callback(data):
     az = data.linear_acceleration.z
 
     if (abs(ax)) >= 5 or (abs(ay)) >= 5:
-	print("BOUM")
-	return
+        print("BOUM")
+        return
     
 def listener():
     global accelration_data
@@ -28,9 +28,7 @@ def listener():
     #rospy.spin() keeps python from exiting until the node is stopped (by pressing Ctrl+c for example). Also, by entering this infinite loop, it allows any ROS callback functions to be executed, whenever a message is listened from the respective ROS topic. The variant function 'rospy.spinOnce()' would allow the callbacks to be executed only once and after exit.
     rospy.spin()
 
-    
-
-    print 'Exiting node ' + rospy.get_name() # This will only be executed if 'rospy.spin()' finishes, after having pressed Ctrl+c
+    print('Exiting node ' + rospy.get_name()) # This will only be executed if 'rospy.spin()' finishes, after having pressed Ctrl+c
 
 if __name__ == '__main__':
     listener()
